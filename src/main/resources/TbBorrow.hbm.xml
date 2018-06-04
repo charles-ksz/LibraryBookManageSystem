@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.dhu.pojo.TbBorrow" table="tb_borrow" schema="library">
+        <id name="id" column="id"/>
+        <property name="readerid" column="readerid"/>
+        <property name="bookid" column="bookid"/>
+        <property name="borrowtime" column="borrowtime"/>
+        <property name="backtime" column="backtime"/>
+        <property name="ifback" column="ifback"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/library</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+
+      <mapping class="com.dhu.pojo.TbBookinfo"/>
+    <mapping resource="TbBookinfo.hbm.xml"/>
+
+    <mapping class="com.dhu.pojo.TbBorrow"/>
+    <mapping resource="TbBorrow.hbm.xml"/>
+
+    <mapping class="com.dhu.pojo.TbManager"/>
+    <mapping resource="TbManager.hbm.xml"/>
+    <mapping class="com.dhu.pojo.TbReader"/>
+    <mapping resource="TbReader.hbm.xml"/>
+
+    <mapping resource="TbBookinfo.hbm.xml"/>
+    <mapping resource="TbBorrow.hbm.xml"/>
+    <mapping resource="TbManager.hbm.xml"/>
+    <mapping resource="TbReader.hbm.xml"/>
+      <mapping resource="TbReader.hbm.xml"/>
+
+  </session-factory>
+</hibernate-configuration>

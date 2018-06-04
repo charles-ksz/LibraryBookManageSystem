@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/tx
+                          http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl"
+                  value="jdbc:mysql://localhost:3306/library?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="user" value="root"/>
+        <property name="password" value="123456"/>
+
+        <property name="maxPoolSize" value="20"/>
+
+        <property name="minPoolSize" value="2"/>
+
+        <property name="initialPoolSize">
+            <value>10</value>
+        </property>
+    </bean>
+
+    <bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>TbReader.hbm.xml</value>
+                <value>TbBookinfo.hbm.xml</value>
+                <value>TbBorrow.hbm.xml</value>
+                <value>TbManager.hbm.xml</value>
+            </list>
+        </property>
+
+
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQLDialect
+                hibernate.show_sql=true
+                hbm2ddl.auto=update
+            </value>
+        </property>
+    </bean>
+
+    <bean name="tbReaderDAOImpl" class="com.dhu.dao.TbReaderDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="tbBookinfoDAOImpl" class="com.dhu.dao.TbBookinfoDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="tbBorrowDAOImpl" class="com.dhu.dao.TbBorrowDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="tbManagerDAOImpl" class="com.dhu.dao.TbManagerDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <bean name="tbReaderServiceImpl" class="com.dhu.service.TbReaderServiceImpl">
+        <property name="tbReaderDAO" ref="tbReaderDAOImpl"/>
+    </bean>
+    <bean name="tbBookinfoServiceImpl" class="com.dhu.service.TbBookinfoServiceImpl">
+        <property name="tbBookinfoDAO" ref="tbBookinfoDAOImpl"/>
+    </bean>
+    <bean name="tbBorrowServiceImpl" class="com.dhu.service.TbBorrowServiceImpl">
+        <property name="tbBorrowDAO" ref="tbBorrowDAOImpl">
+        </property>
+    </bean>
+    <bean name="tbManagerServiceImpl" class="com.dhu.service.TbManagerServiceImpl">
+        <property name="tbManagerDAO" ref="tbManagerDAOImpl">
+
+        </property>
+    </bean>
+
+
+    <bean name="tbReaderActionBean" class="com.dhu.action.TbReaderAction">
+        <property name="tbReaderService" ref="tbReaderServiceImpl"/>
+    </bean>
+    <bean name="tbBookinfoActionBean" class="com.dhu.action.TbBookinfoAction">
+        <property name="tbBookinfoService" ref="tbBookinfoServiceImpl"/>
+    </bean>
+    <bean name="tbBorrowActionBean" class="com.dhu.action.TbBorrowAction">
+        <property name="tbBorrowService" ref="tbBorrowServiceImpl"></property>
+    </bean>
+    <bean name="tbManagerActionBean" class="com.dhu.action.TbManagerAction">
+        <property name="tbManagerService" ref="tbManagerServiceImpl"/>
+    </bean>
+    <bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager"/>
+</beans>

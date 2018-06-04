@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+    <constant name="struts.objectFactory" value="spring"/>
+    <package name="loginregister" extends="struts-default">
+        <interceptors>
+            <interceptor name="privilege" class="com.dhu.interceptor.PrivilegeInterceptor"/>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="defaultStack">
+
+                </interceptor-ref>
+                <interceptor-ref name="privilege"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <action name="login" class="com.dhu.action.LoginAction">
+            <result name="success">WEB-INF/Product/success.jsp</result>
+            <result name="error">WEB-INF/Product/error.jsp</result>
+        </action>
+    </package>
+    <package name="tbReader" namespace="/" extends="struts-default">
+        
+        <action name="*TbReader" class="tbReaderActionBean" method="{1}">
+            <result name="listTbReader">WEB-INF/Product/listTbReader.jsp</result>
+            <result name="listTbReaderAction" type="redirect">listTbReader.action</result>
+            <result name="editTbReader">WEB-INF/Product/editTbReader.jsp</result>
+
+        </action>
+
+    </package>
+</struts>
